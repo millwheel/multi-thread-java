@@ -1,6 +1,7 @@
 package training.multithread.service;
 
 import org.springframework.stereotype.Service;
+import training.multithread.domain.Stock;
 import training.multithread.repository.StockRepository;
 
 @Service
@@ -12,6 +13,8 @@ public class StockService {
     }
 
     public void decrease(Long id, Long quantity){
-        stockRepository.findById(id).orElseThrow();
+        Stock stock = stockRepository.findById(id).orElseThrow();
+        stock.decrease(quantity);
+        stockRepository.saveAndFlush(stock);
     }
 }

@@ -27,7 +27,7 @@ public class Stock {
 
     public void decrease(Long quantity){
         if (this.quantity - quantity < 0){
-            throw new RuntimeException("foo");
+            throw new RuntimeException("Quantity is already zero.");
         }
         this.quantity = this.quantity - quantity;
     }
