@@ -40,4 +40,27 @@ class StockServiceTest {
         Assertions.assertEquals(99, stock.getQuantity());
     }
 
+    @Test
+    public void concurrent_decrease() throws InterruptedException {
+        int threadCount = 100;
+        ExecutorService executorService = Executors.newFixedThreadPool(32);
+        CountDownLatch countDownLatch = new CountDownLatch(threadCount);
+
+        for (int i = 0; i < threadCount; i++){
+            executorService.submit(()->{
+                try {
+                    stockService.decrease(1L, 1L);
+                } catch (Exception e) {
+                    throw new RuntimeException(e);
+                } finally {
+                    countDownLatch.countDown();
+                }
+            });
+        }
+
+        countDownLatch.await();
+
+        Stock stock = stockRepository.findById(1L).orElseThrow();
+        Assertions.assertNotEquals(0, stock.getQuantity());
+    }
 }
