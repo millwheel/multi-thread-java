@@ -2,12 +2,8 @@ package training.multithread.domain;
 
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import lombok.Setter;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
 
 @Getter
 @NoArgsConstructor
@@ -19,6 +15,8 @@ public class Stock {
     private Long id;
     private Long productId;
     private Long quantity;
+    @Version
+    private Long version;
 
     public Stock(Long productId, Long quantity) {
         this.productId = productId;
