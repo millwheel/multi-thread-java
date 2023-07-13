@@ -11,8 +11,9 @@ public class LettuceLockStockFacade {
 
     private StockService stockService;
 
-    public LettuceLockStockFacade(RedisLockRepository redisLockRepository) {
+    public LettuceLockStockFacade(RedisLockRepository redisLockRepository, StockService stockService) {
         this.redisLockRepository = redisLockRepository;
+        this.stockService = stockService;
     }
 
     public void decrease(Long key, Long quantity) throws InterruptedException {
